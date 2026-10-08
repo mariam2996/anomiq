@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AnomIQ — Autonomous AIOps Intelligence</title>
+  <meta name="description" content="Next-generation autonomous AIOps platform. Detect anomalies, diagnose root causes, and recover Kubernetes fleets in real time.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient Luminous Background Orbs (Navy & Cyan) -->
+  <div class="ambient-glow glow-top-left" aria-hidden="true"></div>
+  <div class="ambient-glow glow-top-right" aria-hidden="true"></div>
+  <div class="ambient-glow glow-center-navy" aria-hidden="true"></div>
+  <div class="ambient-glow glow-bottom-blue" aria-hidden="true"></div>
+  <div class="saas-grid-pattern" aria-hidden="true"></div>
+
+  <!-- App Wrapper -->
+  <div class="app-wrapper">
+
+    <!-- MINIMALIST SAAS HEADER -->
+    <header class="site-header">
+      <div class="header-left">
+        <!-- Brand Identity -->
+        <div class="brand-link" id="brandBtn">
+          <div class="brand-icon-box">
+            <svg class="brand-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>
+          </div>
+          <div class="brand-text-block">
+            <span class="brand-name">Anom<span class="brand-highlight">IQ</span></span>
+            <span class="brand-tagline">Detect · Diagnose · Recover</span>
+          </div>
+        </div>
+
+        <!-- Clean Navigation Tabs (ONLY 3 ITEMS) -->
+        <nav class="main-nav" role="tablist">
+          <button class="nav-item active" data-page="page-overview" role="tab" id="tabOverview">
+            <span>Overview</span>
+          </button>
+          <button class="nav-item" data-page="page-monitoring" role="tab" id="tabMonitoring">
+            <span>Monitoring</span>
+          </button>
+          <button class="nav-item" data-page="page-rca" role="tab" id="tabRca">
+            <span>RCA</span>
+            <span class="nav-badge-alert" id="rcaNavBadge">1 Incident</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Header Right Controls -->
+      <div class="header-right">
+        <!-- Cluster Mesh Selector -->
+        <div class="cluster-pill-dropdown" id="clusterPillWrapper">
+          <button class="cluster-pill-btn" id="clusterBtn">
+            <span class="status-beacon-dot beacon-cyan"></span>
+            <span id="currentClusterLabel">Global Mesh</span>
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="cluster-dropdown-menu" id="clusterDropdown">
+            <div class="cluster-menu-item active" data-cluster="all">
+              <strong>Global Mesh (All Regions)</strong>
+              <small>4 regions · 1,482 pods</small>
+            </div>
+            <div class="cluster-menu-item" data-cluster="us-east-1">
+              <strong>us-east-k8s-prod</strong>
+              <small>N. Virginia · 48 nodes · P1 Alert</small>
+            </div>
+            <div class="cluster-menu-item" data-cluster="eu-central-1">
+              <strong>eu-west-k8s-prod</strong>
+              <small>Frankfurt · 36 nodes · Healthy</small>
+            </div>
+            <div class="cluster-menu-item" data-cluster="ap-northeast-1">
+              <strong>ap-east-k8s-edge</strong>
+              <small>Tokyo · 44 nodes · Healthy</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Search Pill (Cmd+K) -->
+        <button class="search-pill-btn" id="cmdTriggerBtn" title="Search commands (Ctrl+K)">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span>Search</span>
+          <kbd class="kbd-tag">Ctrl+K</kbd>
+        </button>
+
+        <!-- Sound FX Toggle -->
+        <button class="icon-action-btn" id="audioToggleBtn" title="Toggle audio cues">
+          <svg class="audio-on-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg class="audio-off-icon hidden" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+
+        <!-- Chaos Demo Toggle -->
+        <button class="btn-demo-chaos" id="simIncidentBtn" title="Toggle between Anomaly & Recovered state">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          <span id="chaosBtnLabel">Simulate Incident</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN SAAS VIEWPORT -->
+    <main class="main-content">
+
+      <!-- ===================================================
+           PAGE 1: OVERVIEW DASHBOARD
+           Balanced Two-Column Layout (Hero Left + 3 Clean KPI Cards Right)
+           =================================================== -->
+      <section class="page-container active" id="page-overview">
+        
+        <!-- Two-Column Hero Row -->
+        <div class="overview-hero-grid">
+          
+          <!-- LEFT: Hero Card with Animated 3D Infrastructure Globe -->
+          <div class="saas-card hero-globe-card">
+            <div class="card-ambient-highlight"></div>
+
+            <div class="hero-globe-header">
+              <div>
+                <div class="hero-status-badge" id="heroStatusBadge">
+                  <span class="status-beacon-dot beacon-rose" id="heroBeacon"></span>
+                  <span id="heroStatusTitle">System Anomaly Detected</span>
+                </div>
+                <h1 class="hero-heading">Infrastructure Mesh</h1>
+                <p class="hero-subtext">AnomIQ is monitoring all services in real time across 128 nodes and 1,482 pods.</p>
+              </div>
+            </div>
+
+            <!-- 3D Holographic Globe Canvas -->
+            <div class="globe-canvas-wrapper" id="globeCanvasWrapper">
+              <canvas id="holoGlobeCanvas" width="800" height="340"></canvas>
+              
+              <!-- Clean Minimal Popover Tooltip -->
+              <div class="globe-saas-tooltip" id="globeNodeTooltip">
+                <div class="tooltip-top">
+                  <span class="tooltip-cluster-name" id="tooltipCluster">us-east-k8s-prod</span>
+                  <span class="tooltip-badge badge-crit" id="tooltipStatus">P1 Active</span>
+                </div>
+                <div class="tooltip-row">
+                  <span>Region</span>
+                  <strong id="tooltipRegion">US East (N. Virginia)</strong>
+                </div>
+                <div class="tooltip-row">
+                  <span>Capacity</span>
+                  <strong id="tooltipPods">584 Pods</strong>
+                </div>
+                <div class="tooltip-row">
+                  <span>Latency P99</span>
+                  <strong class="val-rose" id="tooltipLatency">428ms</strong>
+                </div>
+                <button class="tooltip-action-btn" id="tooltipInvestigateBtn">Investigate Root Cause →</button>
+              </div>
+            </div>
+
+            <!-- Region Status Quick Cards -->
+            <div class="hero-globe-footer">
+              <div class="region-status-card alert" id="cardUsEast">
+                <div class="region-head">
+                  <span class="region-name">US East</span>
+                  <span class="status-beacon-dot beacon-rose"></span>
+                </div>
+                <div class="region-metric">584 Pods · Latency 428ms</div>
+              </div>
+
+              <div class="region-status-card" id="cardEuCentral">
+                <div class="region-head">
+                  <span class="region-name">EU Central</span>
+                  <span class="status-beacon-dot beacon-cyan"></span>
+                </div>
+                <div class="region-metric">462 Pods · Latency 34ms</div>
+              </div>
+
+              <div class="region-status-card" id="cardApEast">
+                <div class="region-head">
+                  <span class="region-name">AP East</span>
+                  <span class="status-beacon-dot beacon-cyan"></span>
+                </div>
+                <div class="region-metric">436 Pods · Latency 41ms</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: ONLY 3 CLEAN KPI CARDS -->
+          <div class="hero-kpi-column">
+            
+            <!-- KPI 1: Active Incidents -->
+            <div class="saas-card kpi-clean-card">
+              <div class="card-ambient-highlight"></div>
+              <div class="kpi-header-row">
+                <span class="kpi-label">Active Incidents</span>
+                <span class="kpi-pill-badge pill-rose" id="kpiIncidentBadge">P1 Critical</span>
+              </div>
+              <div class="kpi-number-row">
+                <span class="kpi-value-huge" id="kpiIncidentCount">1</span>
+                <span class="kpi-meta-text" id="kpiIncidentMeta">checkout-gateway-svc</span>
+              </div>
+              <div class="kpi-footer-row">
+                <span>Memory leak · 8 pods failing probes</span>
+                <a class="kpi-link-arrow" id="btnGoToRca">Open RCA Investigation →</a>
+              </div>
+            </div>
+
+            <!-- KPI 2: Detected Anomalies -->
+            <div class="saas-card kpi-clean-card">
+              <div class="card-ambient-highlight"></div>
+              <div class="kpi-header-row">
+                <span class="kpi-label">Detected Anomalies</span>
+                <span class="kpi-pill-badge pill-cyan">Past 24 Hours</span>
+              </div>
+              <div class="kpi-number-row">
+                <span class="kpi-value-huge">3</span>
+                <span class="kpi-meta-text">2 auto-mitigated by AI</span>
+              </div>
+              <div class="kpi-footer-row">
+                <span>Neural model confidence</span>
+                <strong class="val-cyan">98.4% Confidence</strong>
+              </div>
+            </div>
+
+            <!-- KPI 3: System Uptime -->
+            <div class="saas-card kpi-clean-card">
+              <div class="card-ambient-highlight"></div>
+              <div class="kpi-header-row">
+                <span class="kpi-label">System Uptime</span>
+                <span class="kpi-pill-badge pill-emerald">Four Nines</span>
+              </div>
+              <div class="kpi-number-row">
+                <span class="kpi-value-huge" id="kpiUptimeVal">99.994%</span>
+                <span class="kpi-meta-text">30-day rolling SLA</span>
+              </div>
+              <div class="kpi-footer-row">
+                <span>Error budget remaining</span>
+                <strong class="val-emerald">88.2% (38m remaining)</strong>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Below Hero Section: Cluster Health, CPU/Mem, Pods, Recent Anomalies -->
+        <div class="overview-bottom-grid">
+          
+          <!-- AI Health Score Card (Radial Gauge) -->
+          <div class="saas-card ai-score-card">
+            <div class="card-ambient-highlight"></div>
+            <div class="card-header-clean">
+              <div class="card-title-group">
+                <span class="card-title">AI Health Score</span>
+                <span class="card-subtitle">Real-time autonomous stability index</span>
+              </div>
+            </div>
+
+            <div class="score-display-center">
+              <div class="radial-progress-wrapper">
+                <svg class="radial-svg" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="40" class="radial-bg" />
+                  <circle cx="50" cy="50" r="40" class="radial-bar" id="scoreRadialBar" stroke-dasharray="251.32" stroke-dashoffset="14.5" />
+                </svg>
+                <div class="radial-center-text">
+                  <span class="radial-score-num" id="healthScoreNumber">94.2</span>
+                  <span class="radial-score-unit">/ 100</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="score-breakdown-list">
+              <div class="score-item">
+                <span>Mean Time to Detect (MTTD)</span>
+                <strong id="mttdText">420 ms</strong>
+              </div>
+              <div class="score-item">
+                <span>Autonomous Recovery Rate</span>
+                <strong>96.8%</strong>
+              </div>
+              <div class="score-item">
+                <span>Current Anomaly Risk</span>
+                <strong class="val-rose" id="riskText">Elevated (1 Service)</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- CPU & Memory Usage Streaming Waveforms -->
+          <div class="saas-card telemetry-charts-card">
+            <div class="card-ambient-highlight"></div>
+            <div class="card-header-clean">
+              <div class="card-title-group">
+                <span class="card-title">Resource Telemetry</span>
+                <span class="card-subtitle">Real-time compute & memory allocation</span>
+              </div>
+              <span class="status-beacon-dot beacon-cyan"></span>
+            </div>
+
+            <div class="chart-duo-container">
+              <div class="chart-section">
+                <div class="chart-label-row">
+                  <span class="chart-label-name">CPU Core Utilization</span>
+                  <span class="chart-label-val" id="valLiveCpu">68.4%</span>
+                </div>
+                <div class="canvas-waveform-wrap">
+                  <canvas id="chartCpuCanvas" width="500" height="80"></canvas>
+                </div>
+              </div>
+
+              <div class="chart-section">
+                <div class="chart-label-row">
+                  <span class="chart-label-name">Resident Memory (RSS)</span>
+                  <span class="chart-label-val val-rose" id="valLiveMem">82.9%</span>
+                </div>
+                <div class="canvas-waveform-wrap">
+                  <canvas id="chartMemCanvas" width="500" height="80"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kubernetes Pods / Nodes & Recent Anomalies -->
+          <div class="saas-card infrastructure-pods-card">
+            <div class="card-ambient-highlight"></div>
+            <div class="card-header-clean">
+              <div class="card-title-group">
+                <span class="card-title">Cluster Workloads</span>
+                <span class="card-subtitle">Kubernetes fleet capacity</span>
+              </div>
+            </div>
+
+            <div class="k8s-stat-boxes">
+              <div class="stat-box">
+                <div class="stat-box-num">128</div>
+                <div class="stat-box-lbl">Nodes (1 Degraded)</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-box-num">1,482</div>
+                <div class="stat-box-lbl">Workload Pods</div>
+              </div>
+            </div>
+
+            <div class="pod-status-track-group">
+              <div class="track-legend">
+                <span>1,471 Running</span>
+                <span class="val-rose" id="faultingPodsLabel">8 CrashLoopBackOff</span>
+              </div>
+              <div class="segmented-progress-track">
+                <div class="track-seg-green" id="trackHealthySeg" style="width: 95%;"></div>
+                <div class="track-seg-rose" id="trackFaultySeg" style="width: 5%;"></div>
+              </div>
+            </div>
+
+            <div class="recent-anomalies-mini">
+              <div class="recent-item-clean">
+                <span class="recent-name">Redis Shard-04 High Eviction</span>
+                <span class="recent-status-tag pill-emerald">Auto-Healed</span>
+              </div>
+              <div class="recent-item-clean">
+                <span class="recent-name">Kafka Consumer Lag Anomaly</span>
+                <span class="recent-status-tag pill-emerald">Auto-Resolved</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ===================================================
+           PAGE 2: MONITORING (CLUSTER DETAILS)
+           Clean Visual Cards, Nodes, Pods & Container Health
+           =================================================== -->
+      <section class="page-container" id="page-monitoring">
+        
+        <div class="monitoring-header-bar">
+          <div>
+            <h1 class="page-heading">Cluster Fleet & Workloads</h1>
+            <p class="page-description">Real-time compute pressure, service health, and pod runtime telemetry.</p>
+          </div>
+        </div>
+
+        <!-- Top 4 Clean Stats -->
+        <div class="monitoring-stats-row">
+          <div class="saas-card mon-stat-card">
+            <div class="mon-stat-head">
+              <span class="mon-stat-title">Clusters</span>
+              <span class="status-beacon-dot beacon-cyan"></span>
+            </div>
+            <div class="mon-stat-val">4</div>
+            <div class="mon-stat-sub">Across 4 global cloud regions</div>
+          </div>
+
+          <div class="saas-card mon-stat-card">
+            <div class="mon-stat-head">
+              <span class="mon-stat-title">Active Nodes</span>
+              <span class="status-beacon-dot beacon-cyan"></span>
+            </div>
+            <div class="mon-stat-val">128</div>
+            <div class="mon-stat-sub">127 Ready · 1 Pressure</div>
+          </div>
+
+          <div class="saas-card mon-stat-card">
+            <div class="mon-stat-head">
+              <span class="mon-stat-title">Monitored Pods</span>
+              <span class="status-beacon-dot beacon-cyan"></span>
+            </div>
+            <div class="mon-stat-val">1,482</div>
+            <div class="mon-stat-sub">99.2% healthy containers</div>
+          </div>
+
+          <div class="saas-card mon-stat-card">
+            <div class="mon-stat-head">
+              <span class="mon-stat-title">Containers</span>
+              <span class="status-beacon-dot beacon-cyan"></span>
+            </div>
+            <div class="mon-stat-val">4,120</div>
+            <div class="mon-stat-sub">containerd 1.7 runtime</div>
+          </div>
+        </div>
+
+        <!-- 16-Node Hardware Heatmap & Live Stream -->
+        <div class="mon-middle-grid">
+          <div class="saas-card">
+            <div class="card-ambient-highlight"></div>
+            <div class="card-header-clean">
+              <div class="card-title-group">
+                <span class="card-title">Compute Node Pressure Matrix</span>
+                <span class="card-subtitle">16 core nodes in selected cluster</span>
+              </div>
+            </div>
+
+            <div class="node-matrix-container" id="nodeMatrixGrid">
+              <!-- Rendered via JS -->
+            </div>
+
+            <div class="node-inspector-bar" id="nodeSelectedInfo">
+              <span>Node: <strong>node-us-east-worker-08</strong></span>
+              <span>Load: CPU 84% · MEM 91%</span>
+              <span class="val-rose">Status: MemoryPressure</span>
+            </div>
+          </div>
+
+          <div class="saas-card">
+            <div class="card-ambient-highlight"></div>
+            <div class="card-header-clean">
+              <div class="card-title-group">
+                <span class="card-title">Live Ingress Throughput</span>
+                <span class="card-subtitle">Actual requests vs predictive neural corridor</span>
+              </div>
+              <strong class="val-cyan" id="clusterRpsVal">142,400 req/s</strong>
+            </div>
+
+            <div class="canvas-waveform-wrap" style="height: 180px;">
+              <canvas id="clusterStreamCanvas" width="600" height="180"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service Health Status Row -->
+        <div class="service-health-grid">
+          <div class="svc-card">
+            <div class="svc-card-head">
+              <span class="svc-name">API Gateway</span>
+              <span class="status-beacon-dot beacon-cyan"></span>
+            </div>
+            <span class="svc-latency">12ms · 48k rps</span>
+          </div>
+
+          <div class="svc-card">
+            <div class="svc-card-head">
+              <span class="svc-name">Auth Service</span>
+              <span class="status-beacon-dot beacon-cyan"></span>
+            </div>
+            <span class="svc-latency">6ms · 42k rps</span>
+          </div>
+
+          <div class="svc-card" id="svcCardCheckout">
+            <div class="svc-card-head">
+              <span class="svc-name">Checkout Svc</span>
+              <span class="status-beacon-dot beacon-rose" id="svcBeaconCheckout"></span>
+            </div>
+            <span class="svc-latency val-rose" id="svcLatencyCheckout">4,280ms · High Latency</span>
+          </div>
+
+          <div class="svc-card">
+            <div class="svc-card-head">
+              <span class="svc-name">Kafka Stream</span>
+              <span class="status-beacon-dot beacon-cyan"></span>
+            </div>
+            <span class="svc-latency">18ms · Nominal</span>
+          </div>
+
+          <div class="svc-card">
+            <div class="svc-card-head">
+              <span class="svc-name">Redis Cache</span>
+              <span class="status-beacon-dot beacon-cyan"></span>
+            </div>
+            <span class="svc-latency">2ms · 99.8% hit</span>
+          </div>
+
+          <div class="svc-card">
+            <div class="svc-card-head">
+              <span class="svc-name">Postgres DB</span>
+              <span class="status-beacon-dot beacon-cyan"></span>
+            </div>
+            <span class="svc-latency">4ms · 12 conns</span>
+          </div>
+        </div>
+
+        <!-- Clean Pod Fleet Workloads Table -->
+        <div class="saas-card pod-table-card">
+          <div class="card-ambient-highlight"></div>
+          
+          <div class="table-toolbar-clean">
+            <div class="search-box-clean">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="podSearchInput" placeholder="Filter pods by name, namespace, status...">
+            </div>
+
+            <div class="filter-button-group">
+              <button class="filter-btn-pill active" data-filter="all">All (14)</button>
+              <button class="filter-btn-pill" data-filter="running">Running (10)</button>
+              <button class="filter-btn-pill" data-filter="crashloop">CrashLoop (3)</button>
+              <button class="filter-btn-pill" data-filter="pending">Pending (1)</button>
+            </div>
+          </div>
+
+          <table class="saas-table">
+            <thead>
+              <tr>
+                <th>Pod Name</th>
+                <th>Namespace</th>
+                <th>Node</th>
+                <th>Status</th>
+                <th>Restarts</th>
+                <th>CPU</th>
+                <th>Memory</th>
+                <th>Age</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="podsTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+
+      </section>
+
+
+      <!-- ===================================================
+           PAGE 3: ROOT CAUSE ANALYSIS (RCA)
+           Visually connected AI Intelligence Pipeline:
+           Anomaly → Evidence → Root Cause → Recommended Action
+           =================================================== -->
+      <section class="page-container" id="page-rca">
+        
+        <!-- Incident Master Header -->
+        <div class="saas-card rca-hero-banner">
+          <div class="card-ambient-highlight"></div>
+          
+          <div class="rca-top-row">
+            <div class="rca-title-area">
+              <div class="rca-badge-strip">
+                <span class="badge-p1-hero" id="rcaStatusPill">P1 Critical · INC-8921</span>
+                <span class="kpi-pill-badge pill-cyan">checkout-gateway-svc</span>
+                <span class="kpi-meta-text" id="rcaElapsedTimer">Detected 5m 12s ago</span>
+              </div>
+              <h2 class="rca-title-main">Payment Gateway Kernel Latency Spike & Pod OOMCascades</h2>
+              <p class="rca-desc-main">
+                AI Autonomous Reasoning Engine has identified high-confidence root cause in <code class="code-hl">checkout-gateway:v2.14.0</code>. 98.7% neural correlation consensus.
+              </p>
+            </div>
+
+            <button class="btn-remediate-cta" id="btnExecuteRemediation">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span>Execute Autonomous Recovery</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- VISUAL AI INTELLIGENCE PIPELINE (Connected Step Flow) -->
+        <div class="ai-pipeline-track">
+          <!-- Step 1: Anomaly -->
+          <div class="pipeline-step-card">
+            <div class="card-ambient-highlight"></div>
+            <div class="pipeline-step-header">
+              <span class="step-num-pill">Step 01</span>
+              <span class="status-beacon-dot beacon-rose"></span>
+            </div>
+            <div class="step-stage-name">Detected Anomaly</div>
+            <p class="step-stage-desc">
+              P99 latency spiked from 18ms to 4,280ms. 8 replica pods entered CrashLoopBackOff due to cgroup memory exhaustion.
+            </p>
+            <div class="step-arrow-connector">→</div>
+          </div>
+
+          <!-- Step 2: Evidence -->
+          <div class="pipeline-step-card">
+            <div class="card-ambient-highlight"></div>
+            <div class="pipeline-step-header">
+              <span class="step-num-pill">Step 02</span>
+              <span class="status-beacon-dot beacon-cyan"></span>
+            </div>
+            <div class="step-stage-name">Correlated Evidence</div>
+            <p class="step-stage-desc">
+              Resident Memory slope jumped to +4.2MB/s. eBPF intercepted 14 kernel OOM kills. Log patterns confirm Direct buffer leaks.
+            </p>
+            <div class="step-arrow-connector">→</div>
+          </div>
+
+          <!-- Step 3: Root Cause -->
+          <div class="pipeline-step-card active-focus">
+            <div class="card-ambient-highlight"></div>
+            <div class="pipeline-step-header">
+              <span class="step-num-pill">Step 03</span>
+              <span class="status-beacon-dot beacon-rose"></span>
+            </div>
+            <div class="step-stage-name">Probable Root Cause</div>
+            <p class="step-stage-desc">
+              Commit <code class="code-hl">9f4a12c</code> in release v2.14.0 omitted Netty channel buffer release, triggering GC Stop-the-World pauses (>3.4s).
+            </p>
+            <div class="step-arrow-connector">→</div>
+          </div>
+
+          <!-- Step 4: Recommended Action -->
+          <div class="pipeline-step-card">
+            <div class="card-ambient-highlight"></div>
+            <div class="pipeline-step-header">
+              <span class="step-num-pill">Step 04</span>
+              <span class="status-beacon-dot beacon-cyan"></span>
+            </div>
+            <div class="step-stage-name">AI Recommendation</div>
+            <p class="step-stage-desc">
+              Rollback Helm release to canary v2.13.9. Envoy reroutes traffic with zero downtime. Estimated recovery: 35 seconds.
+            </p>
+          </div>
+        </div>
+
+        <!-- RCA Details Split: Dependency Graph & Correlated Logs -->
+        <div class="rca-details-split">
+          
+          <!-- Microservice Call Graph -->
+          <div class="saas-card dependency-graph-card">
+            <div class="card-ambient-highlight"></div>
+            <div class="card-header-clean">
+              <div class="card-title-group">
+                <span class="card-title">Service Dependency Graph & Blast Radius</span>
+                <span class="card-subtitle">Backpressure cascading path from faulty worker</span>
+              </div>
+            </div>
+
+            <div class="dependency-canvas-wrap">
+              <canvas id="topoGraphCanvas" width="700" height="260"></canvas>
+            </div>
+          </div>
+
+          <!-- Correlated Logs -->
+          <div class="saas-card correlated-logs-card">
+            <div class="card-ambient-highlight"></div>
+            <div class="card-header-clean">
+              <div class="card-title-group">
+                <span class="card-title">Correlated Log Culprits</span>
+                <span class="card-subtitle">Filtered to checkout-gateway-svc</span>
+              </div>
+              <span class="kpi-pill-badge pill-cyan">4 Culprit Matches</span>
+            </div>
+
+            <div class="clean-log-terminal" id="logTerminalStream">
+              <!-- Logs populated via JS -->
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div> <!-- /app-wrapper -->
+
+
+  <!-- ===================================================
+       COMMAND PALETTE MODAL (Ctrl + K)
+       =================================================== -->
+  <div class="saas-modal-backdrop" id="cmdModal" aria-hidden="true">
+    <div class="cmd-box-clean">
+      <div class="cmd-input-bar">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="cmdSearchInput" placeholder="Search pages, clusters, or actions..." autocomplete="off">
+        <kbd class="kbd-tag">ESC</kbd>
+      </div>
+      <div class="cmd-list-items">
+        <div class="cmd-single-item" data-action="nav-overview">
+          <div>
+            <div class="cmd-item-title">Overview Dashboard</div>
+            <div class="cmd-item-desc">System health, 3D Globe, and core KPIs</div>
+          </div>
+        </div>
+        <div class="cmd-single-item" data-action="nav-monitoring">
+          <div>
+            <div class="cmd-item-title">Monitoring & Cluster Fleet</div>
+            <div class="cmd-item-desc">Compute pressure matrix, Pods, and runtime telemetry</div>
+          </div>
+        </div>
+        <div class="cmd-single-item" data-action="nav-rca">
+          <div>
+            <div class="cmd-item-title">Root Cause Analysis (RCA)</div>
+            <div class="cmd-item-desc">Investigate INC-8921 memory leak and canary rollback</div>
+          </div>
+        </div>
+        <div class="cmd-single-item" data-action="execute-remediation">
+          <div>
+            <div class="cmd-item-title">Execute Autonomous Recovery</div>
+            <div class="cmd-item-desc">Run automated Helm canary rollback to v2.13.9</div>
+          </div>
+        </div>
+        <div class="cmd-single-item" data-action="trigger-chaos">
+          <div>
+            <div class="cmd-item-title">Toggle Chaos Demo Mode</div>
+            <div class="cmd-item-desc">Simulate incident injection or restore nominal state</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===================================================
+       AUTONOMOUS REMEDIATION MODAL / TERMINAL EXECUTION
+       =================================================== -->
+  <div class="saas-modal-backdrop" id="remediationModal" aria-hidden="true">
+    <div class="saas-modal-box">
+      <div class="modal-header-clean">
+        <div>
+          <h3>Autonomous Recovery Dispatch</h3>
+          <span class="kpi-meta-text">Target: checkout-gateway-svc · Playbook: canary-rollback-v1</span>
+        </div>
+        <button class="modal-close-icon" id="closeRemModal">✕</button>
+      </div>
+
+      <div class="modal-body-clean">
+        <div class="modal-terminal-output" id="remTerminalOutput">
+          <div class="term-line-dim">anomiq-recovery-agent initialized. Awaiting dispatch confirmation...</div>
+        </div>
+      </div>
+
+      <div class="modal-footer-clean">
+        <span class="kpi-meta-text">⚡ 0 Downtime Expected · Dynamic traffic shifting via Envoy</span>
+        <button class="btn-remediate-cta" id="btnStartExecution">
+          <span>Start Playbook Execution</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===================================================
+       POD DETAILS INSPECTOR MODAL
+       =================================================== -->
+  <div class="saas-modal-backdrop" id="podDetailsModal" aria-hidden="true">
+    <div class="saas-modal-box">
+      <div class="modal-header-clean">
+        <div>
+          <h3 id="modalPodTitle">checkout-gateway-svc-78f94-xk8p</h3>
+          <span class="kpi-meta-text" id="modalPodMeta">Namespace: payments · Node: node-us-east-worker-08</span>
+        </div>
+        <button class="modal-close-icon" id="closePodModal">✕</button>
+      </div>
+
+      <div class="modal-body-clean">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
+          <div class="stat-box">
+            <div class="stat-box-lbl">STATUS</div>
+            <div class="stat-box-num val-rose" id="modalPodStatus" style="font-size: 16px;">CrashLoop</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-lbl">RESTARTS</div>
+            <div class="stat-box-num" id="modalPodRestarts" style="font-size: 16px;">6</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-lbl">CPU ALLOCATION</div>
+            <div class="stat-box-num" id="modalPodCpu" style="font-size: 16px;">92%</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-lbl">MEMORY RSS</div>
+            <div class="stat-box-num val-rose" id="modalPodMem" style="font-size: 16px;">99.5%</div>
+          </div>
+        </div>
+
+        <div style="font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px;">CONTAINER LOGS</div>
+        <div class="clean-log-terminal">
+          <div class="clean-log-line">[io.netty.bootstrap.ServerBootstrap] Started HTTP server on :8080</div>
+          <div class="clean-log-line">[c.a.p.PaymentRouter] Processing checkout batch #89104</div>
+          <div class="clean-log-line error">[io.netty.buffer] High pending allocation: 3,921,800,240 bytes</div>
+          <div class="clean-log-line culprit">java.lang.OutOfMemoryError: Java heap space [NettyEpollWorker-4-8]</div>
+          <div class="clean-log-line error">[kubelet] Container checkout-gateway failed liveness probe, restarting...</div>
+        </div>
+      </div>
+
+      <div class="modal-footer-clean">
+        <button class="btn-table-action" id="modalRestartPodBtn">Restart Pod</button>
+        <button class="btn-remediate-cta" id="modalJumpRcaBtn">View Full RCA Investigation →</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Toast Notification Container -->
+  <div class="saas-toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="globe.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
