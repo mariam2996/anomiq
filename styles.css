@@ -236,7 +236,7 @@ html, body {
   width: auto;
   display: block;
   border-radius: 6px;
-  mix-blend-mode: lighten;
+  mix-blend-mode: screen;
   transition: filter var(--trans-fast), transform var(--trans-fast);
   filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.35));
 }
