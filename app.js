@@ -1,6 +1,5 @@
 /**
- * AnomIQ — Modern AI SaaS Platform Controller
- * "Detect. Diagnose. Recover."
+ * iOPS — The Eye of Intelligent Operations
  * Handles Navigation, Real-time Telemetry, Topology Graph,
  * Pods Matrix, and Autonomous Recovery Execution.
  */
@@ -922,7 +921,7 @@ function initApp() {
 
   // Welcome Toast
   setTimeout(() => {
-    showToast('AnomIQ Connected', 'Autonomous AIOps active. Monitoring 1,482 pods across 4 clusters.');
+    showToast('iOPS Connected', 'Intelligent Operations active. Monitoring 1,482 pods across 4 clusters.');
   }, 600);
 }
 
