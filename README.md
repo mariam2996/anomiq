@@ -1,7 +1,8 @@
-# AnomIQ — Autonomous AIOps SaaS Platform
+# iOPS — The Eye of Intelligent Operations
+
 > **Detect · Diagnose · Recover**
 
-AnomIQ is a modern, premium AI SaaS observability and autonomous self-healing platform for cloud-native Kubernetes infrastructure.
+iOPS is a modern, premium AI SaaS observability and autonomous self-healing platform for cloud-native Kubernetes infrastructure.
 
 ---
 
@@ -24,7 +25,7 @@ AnomIQ is a modern, premium AI SaaS observability and autonomous self-healing pl
 
 ### 1. Overview Dashboard
 - **Balanced Two-Column Hero**:
-  - **Left (Hero Visual)**: Interactive 3D glowing globe representing global Kubernetes infrastructure (US East, EU Central, AP East), system status indicator (*"System Healthy / AnomIQ is monitoring all services in real time"*), and region latency badges.
+  - **Left (Hero Visual)**: Interactive 3D glowing globe representing global Kubernetes infrastructure (US East, EU Central, AP East), system status indicator (*"iOPS is monitoring all services in real time"*), and region latency badges.
   - **Right (3 Clean KPI Cards)**:
     1. **Active Incidents**: Card with prominent count `1` (or `0`), severity tag, and direct 1-click link to RCA.
     2. **Detected Anomalies**: Card with 24-hour total `3`, neural confidence `98.4%`, and auto-mitigated count.
@@ -60,3 +61,9 @@ AnomIQ is a modern, premium AI SaaS observability and autonomous self-healing pl
 - **Command Palette**: Press `Ctrl+K` (or `Cmd+K`) to search pages and trigger actions.
 - **Audio Feedback**: Click the sound icon in the header to toggle subtle UI audio clicks.
 - **Zero Dependencies**: Simply open `index.html` in any browser. No build steps or servers required.
+
+---
+
+## 🔗 Live Site
+
+👉 [mariam2996.github.io/anomiq](https://mariam2996.github.io/anomiq/)
